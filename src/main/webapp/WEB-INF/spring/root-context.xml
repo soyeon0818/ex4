@@ -10,4 +10,14 @@
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>		
 	</bean>
 	
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"/> <!-- spring과 mybatis를 연결. mybatis 위치를 명시 -->
+		<!-- classpath : 배포했을 때 class가 저장되는 위치 -->
+	</bean>
+	
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean" /> <!-- connection과 연결 -->
+	</bean>
+	
 </beans>

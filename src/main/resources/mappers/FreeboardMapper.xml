@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FreeboardMapper">
+	<select id="list" resultType="com.soyeon.board.BoardDTO" parameterType="com.soyeon.util.RowMaker">
+		select * from 
+		(select rownum R, F.* from 
+		(select * from FREEBOARD) F)
+		where R between #{startRow} and #{lastRow}
+	</select>
+	
+	<select id="view" resultType="com.soyeon.freeboard.FreeboardDTO" parameterType="java.lang.Integer">
+		select * from FREEBOARD
+		where NUM = #{num}
+	</select>
+	
+	<insert id="write" parameterType="com.soyeon.freeboard.FreeboardDTO">
+		insert into FREEBOARD (NUM, WRITER, TITLE, CONTENTS, REG_DATE, HIT, REF, STEP, DEPTH)
+		values(point_seq.nextval,#{writer},#{title},#{contents},SYSDATE,0,point_seq.currval,0,0)
+	</insert>
+	
+	<update id="update" parameterType="com.soyeon.freeboard.FreeboardDTO">
+		update FREEBOARD set TITLE=#{title}, CONTENTS=#{contents}, REG_DATE=SYSDATE where NUM=#{num} 
+	</update>
+	
+</mapper>

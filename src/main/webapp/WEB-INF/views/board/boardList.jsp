@@ -39,7 +39,7 @@
 						</c:forEach>
 					</c:catch>
 					${ dto.num }</td>
-					<td><a href="noticeView?num=${ dto.num }">${ dto.title }</a></td>
+					<td><a href="boardView?num=${ dto.num }">${ dto.title }</a></td>
 					<td>${ dto.writer }</td>
 					<td>${ dto.reg_date }</td>
 					<td>${ dto.hit }</td>

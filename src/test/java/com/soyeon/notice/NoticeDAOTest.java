@@ -1,17 +1,15 @@
 package com.soyeon.notice;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.soyeon.board.BoardDTO;
 import com.soyeon.util.PageMaker;
-import com.soyeon.util.RowMaker;
 
 
 public class NoticeDAOTest extends MyAbstractTest {
@@ -20,18 +18,17 @@ public class NoticeDAOTest extends MyAbstractTest {
 	private NoticeDAO noticeDAO;
 	
 	@Test
-	public void test() throws Exception {
-		PageMaker pageMaker = new PageMaker(10, 1);
-		RowMaker rowMaker = pageMaker.getRowMaker("", "");
+	public void countTest() throws Exception {
+		int count = noticeDAO.boardCount();
 		
-		List<BoardDTO> ar = noticeDAO.boardList(rowMaker);
-		
-		Assert.assertEquals(0,ar.size());
+		assertNotEquals(0, count);
 	}
 	
-	//@Test
-	public void test2() throws Exception {
-		int result = noticeDAO.boardDelete(466);
-		assertEquals(1, result);
+	@Test
+	public void connectionTest() throws Exception {
+		PageMaker pageMaker = new PageMaker(10, 1);
+		List<BoardDTO> ar = noticeDAO.boardList(pageMaker.getRowMaker(null, null));
+		
+		assertNotEquals(0, ar.size());
 	}
 }
