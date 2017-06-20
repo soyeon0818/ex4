@@ -8,46 +8,54 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.soyeon.board.BoardDTO;
 import com.soyeon.notice.NoticeDTO;
 import com.soyeon.notice.NoticeServiceImpl;
+import com.soyeon.util.ListInfo;
 
 @Controller
-@RequestMapping(value="/notice/**")
+@RequestMapping(value="/board/**")
 public class NoticeController {
 	
 	@Inject /* inject는 타입으로 찾는다. */
 	private NoticeServiceImpl noticeService;
 
 	@RequestMapping(value="noticeList", method=RequestMethod.GET)
-	public void noticeList(Model model, @RequestParam(defaultValue="1") Integer curPage) throws Exception {
-		model.addAttribute("kind", "notice");
-		List<BoardDTO> ar = noticeService.boardList(curPage);
+	public String noticeList(Model model, ListInfo listInfo) throws Exception {
+		System.out.println(listInfo.getCurPage());
+		
+		List<BoardDTO> ar = noticeService.boardList(listInfo);
+		model.addAttribute("board", "notice");
 		model.addAttribute("list", ar);
+		model.addAttribute("listInfo", listInfo);
+		
+		return "/board/boardList";
 	}
 	
 	@RequestMapping(value="noticeView", method=RequestMethod.GET)
-	public void noticeView(Integer num, Model model) throws Exception {
-		model.addAttribute("kind", "notice");
+	public String noticeView(Integer num, Model model) throws Exception {
+		model.addAttribute("board", "notice");
 		BoardDTO boardDTO = noticeService.boardView(num);
 		model.addAttribute("view", boardDTO);
+		
+		return "/board/boardView";
 	}
 	
 	@RequestMapping(value="noticeUpdate",method=RequestMethod.GET)
 	public String noticeUpdate(Integer num, Model model) throws Exception {
-		model.addAttribute("kind", "notice");
+		model.addAttribute("board", "notice");
 		BoardDTO boardDTO = noticeService.boardView(num);
 		model.addAttribute("view", boardDTO);
 		model.addAttribute("path", "Update");
-		return "notice/noticeWrite";
+		
+		return "/board/boardWrite";
 	}
 	
 	@RequestMapping(value="noticeUpdate",method=RequestMethod.POST)
 	public String noticeUpdate(NoticeDTO noticeDTO, RedirectAttributes rd) throws Exception {
-		rd.addFlashAttribute("kind", "notice");
+		rd.addFlashAttribute("board", "notice");
 		int result = noticeService.boardUpdate(noticeDTO);
 		String message = "update fail";
 		
@@ -56,21 +64,20 @@ public class NoticeController {
 		}
 		rd.addFlashAttribute("message",message);
 		
-		return "redirect:/notice/noticeList";
-		
-		/*String url = "redirect:noticeList";
-		return new ModelAndView(url);*/
+		return "redirect:/board/noticeList";
 	}
 	
 	@RequestMapping(value="noticeWrite", method=RequestMethod.GET)
-	public void noticeWrite(Model model) {
-		model.addAttribute("kind", "notice");
+	public String noticeWrite(Model model) {
+		model.addAttribute("board", "notice");
 		model.addAttribute("path","Write");
+		
+		return "/board/boardWrite";
 	}
 	
 	@RequestMapping(value="noticeWrite", method=RequestMethod.POST)
 	public String noticeWrite(NoticeDTO noticeDTO, RedirectAttributes rd) throws Exception {
-		rd.addFlashAttribute("kind", "notice");
+		rd.addFlashAttribute("board", "notice");
 		int result = noticeService.boardWrite(noticeDTO);
 		
 		String message = "fail";
@@ -80,13 +87,12 @@ public class NoticeController {
 		}
 		rd.addFlashAttribute("message", message);		//redirect로 보낼 때 값을 전송하려면
 		
-		/*return "notice/result";*/
-		return "redirect:noticeList";
+		return "redirect:/board/noticeList";
 	}
 	
 	@RequestMapping(value="noticeDelete", method=RequestMethod.GET)
 	public String noticeDelete(Integer num, RedirectAttributes rd) throws Exception {
-		rd.addFlashAttribute("kind", "notice");
+		rd.addFlashAttribute("board", "notice");
 		int result = noticeService.boardDelete(num);
 		
 		String message = "delete fail";
@@ -96,7 +102,6 @@ public class NoticeController {
 		}
 		rd.addFlashAttribute("message",message);
 		
-		return "redirect:noticeList";	// 상대경로
-		/*return "redirect:/notice/noticeList"; // 절대경로로 해도 된다.*/
+		return "redirect:/board/noticeList";
 	}
 }

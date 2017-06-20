@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.soyeon.board.BoardDAO;
 import com.soyeon.board.BoardDTO;
-import com.soyeon.util.RowMaker;
+import com.soyeon.util.ListInfo;
 
 @Repository
 public class FreeboardDAO implements BoardDAO {
@@ -19,8 +19,8 @@ public class FreeboardDAO implements BoardDAO {
 	private static final String NAMESPACE = "FreeboardMapper.";
 
 	@Override
-	public List<BoardDTO> boardList(RowMaker rowMaker) throws Exception {
-		return sqlSession.selectList(NAMESPACE + "list", rowMaker);
+	public List<BoardDTO> boardList(ListInfo listInfo) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "list", listInfo);
 	}
 
 	@Override
@@ -44,14 +44,11 @@ public class FreeboardDAO implements BoardDAO {
 	}
 
 	@Override
-	public int boardCount() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int boardCount(ListInfo listInfo) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "count");
 	}
 
 	@Override
 	public void boardHit(int num) throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 }

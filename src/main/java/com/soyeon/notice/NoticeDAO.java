@@ -1,12 +1,6 @@
 package com.soyeon.notice;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.soyeon.board.BoardDAO;
 import com.soyeon.board.BoardDTO;
-import com.soyeon.util.DBConnect;
-import com.soyeon.util.RowMaker;
+import com.soyeon.util.ListInfo;
 
 @Repository
 // NoticeDAO noticeDAO = new NoticeDAO();
@@ -26,8 +19,8 @@ public class NoticeDAO implements BoardDAO {
 	private static final String NAMESPACE = "NoticeMapper.";
 	
 	@Override
-	public List<BoardDTO> boardList(RowMaker rowMaker) throws Exception {
-		return sqlSession.selectList(NAMESPACE + "list", rowMaker);
+	public List<BoardDTO> boardList(ListInfo listInfo) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "list", listInfo);
 	}
 
 	@Override
@@ -51,8 +44,8 @@ public class NoticeDAO implements BoardDAO {
 	}
 
 	@Override
-	public int boardCount() throws Exception {
-		return sqlSession.selectOne(NAMESPACE + "count");
+	public int boardCount(ListInfo listInfo) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "count", listInfo);
 	}
 
 	@Override

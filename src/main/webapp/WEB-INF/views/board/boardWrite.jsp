@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>${ kind }${ path }</h1>
-	<form action="board${ path }" method="post">
+	<h1>${ board }${ path }</h1>
+	<form action="${ board }${ path }" method="post">
 		<input type="hidden" name="num" value="${ view.num }">
 		<p><input type="text" name="title" placeholder="title" value=" ${ view.title }"></p>
 		<p><textarea name="contents" placeholder="contents" cols="100" rows="30">${ view.contents }</textarea>

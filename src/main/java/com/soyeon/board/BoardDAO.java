@@ -2,12 +2,12 @@ package com.soyeon.board;
 
 import java.util.List;
 
-import com.soyeon.util.RowMaker;
+import com.soyeon.util.ListInfo;
 
 public interface BoardDAO {
 	
 	//list
-	public List<BoardDTO> boardList(RowMaker rowMaker) throws Exception;
+	public List<BoardDTO> boardList(ListInfo listInfo) throws Exception;
 	
 	//view
 	public BoardDTO boardView(int num) throws Exception;
@@ -22,7 +22,7 @@ public interface BoardDAO {
 	public int boardDelete(int num) throws Exception;
 	
 	//count
-	public int boardCount() throws Exception;
+	public int boardCount(ListInfo listInfo) throws Exception;
 	
 	//hit
 	public void boardHit(int num) throws Exception;

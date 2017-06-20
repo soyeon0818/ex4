@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>${ kind }View</h1>
+	<h1>${ board }View</h1>
 	
 	<h6>num : ${ view.num }</h6>
 	<h6>writer : ${ view.writer }</h6>
@@ -15,7 +15,7 @@
 	<h6>contents : ${ view.contents }</h6>
 	<h6>hit : ${ view.hit }</h6>
 	
-	<a href="boardUpdate?num=${ view.num }">Update</a>
-	<a href="boardDelete?num=${ view.num }">Delete</a>
+	<a href="${ board }Update?num=${ view.num }">Update</a>
+	<a href="${ board }Delete?num=${ view.num }">Delete</a>
 </body>
 </html>

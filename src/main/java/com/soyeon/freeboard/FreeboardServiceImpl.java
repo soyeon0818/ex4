@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.soyeon.board.BoardDTO;
 import com.soyeon.board.BoardService;
-import com.soyeon.util.PageMaker;
-import com.soyeon.util.RowMaker;
+import com.soyeon.util.ListInfo;
 
 @Service
 public class FreeboardServiceImpl implements BoardService{
@@ -18,11 +17,12 @@ public class FreeboardServiceImpl implements BoardService{
 	private FreeboardDAO freeboardDAO;
 	
 	@Override
-	public List<BoardDTO> boardList(int curPage) throws Exception {
-		PageMaker pageMaker = new PageMaker(10, curPage);
-		RowMaker rowMaker = pageMaker.getRowMaker("", "");
+	public List<BoardDTO> boardList(ListInfo listInfo) throws Exception {
+		int result = freeboardDAO.boardCount(listInfo);
+		listInfo.makePage(result);
+		listInfo.setRow();
 		
-		return freeboardDAO.boardList(rowMaker);
+		return freeboardDAO.boardList(listInfo);
 	}
 	
 	public BoardDTO boardView(int num) throws Exception {

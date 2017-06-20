@@ -4,16 +4,36 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="NoticeMapper">	<!-- 파일명 쓰면 된다. -->
-	<select id="count" resultType="java.lang.Integer">
-		select nvl(count(NUM),0) from NOTICE
+	<sql id="search">
+		<trim prefix="where" prefixOverrides="and || or"> 
+			<if test="search == 'title'">
+				title like '%' || #{find} || '%' 
+			</if>
+			<if test="search == 'writer'">
+				writer like '%' || #{find} || '%' 
+			</if>
+			<if test="search == 'contents'">
+				contents like '%' || #{find} || '%' 
+			</if>
+		</trim>
+	</sql>
+
+	<select id="count" resultType="java.lang.Integer" parameterType="com.soyeon.util.ListInfo">
+		select nvl(count(NUM),0) from NOTICE 
+		<include refid="search"></include>
 	</select>
 	
 	<select id="view" resultType="com.soyeon.notice.NoticeDTO" parameterType="java.lang.Integer">
 		select * from NOTICE where NUM=#{num}
 	</select>
 	
-	<select id="list" resultType="com.soyeon.notice.NoticeDTO" parameterType="com.soyeon.util.RowMaker">
-		select * from (select rownum R, N.* from (select * from notice order by NUM desc) N) where R between #{startRow} and #{lastRow}
+	<select id="list" resultType="com.soyeon.notice.NoticeDTO" parameterType="com.soyeon.util.ListInfo">
+		select * from 
+		(select rownum R, N.* from 
+		(select * from NOTICE 
+		<include refid="search"></include>
+		order by NUM desc) N) 
+		where R between #{startRow} and #{lastRow}
 	</select>
 	
 	<insert id="write" parameterType="com.soyeon.notice.NoticeDTO">
