@@ -16,7 +16,7 @@ import com.soyeon.freeboard.FreeboardDTO;
 import com.soyeon.freeboard.FreeboardServiceImpl;
 
 @Controller
-@RequestMapping(value="/freeboard/**")
+@RequestMapping(value="/board/**")
 public class FreeboardController {
 
 	@Inject
@@ -25,7 +25,7 @@ public class FreeboardController {
 	@RequestMapping(value="freeboardList")
 	public String freeboardList(@RequestParam(defaultValue="1")Integer curPage, Model model) throws Exception {
 		List<BoardDTO> ar = freeboardService.boardList(curPage);
-		model.addAttribute("kind", "freeboard");
+		model.addAttribute("board", "freeboard");
 		model.addAttribute("list", ar);
 		
 		return "/board/boardList";
@@ -34,14 +34,14 @@ public class FreeboardController {
 	@RequestMapping(value="boardView")
 	public String freeboardView(int num, Model model) throws Exception {
 		FreeboardDTO freeboardDTO = (FreeboardDTO)freeboardService.boardView(num);
-		model.addAttribute("kind", "freeboard");
+		model.addAttribute("board", "freeboard");
 		model.addAttribute("view", freeboardDTO);
 		
 		return "/board/boardView";
 	}
 	@RequestMapping(value="freeboardWrite", method=RequestMethod.GET)
 	public String freeboardWrite(Model model) throws Exception {
-		model.addAttribute("kind", "freeboard");
+		model.addAttribute("board", "freeboard");
 		model.addAttribute("path", "Write");
 		
 		return "/board/boardWrite";
@@ -49,7 +49,7 @@ public class FreeboardController {
 	@RequestMapping(value="boardWrite", method=RequestMethod.POST)
 	public String freeboardWrite(BoardDTO boardDTO, RedirectAttributes rd) throws Exception {
 		int result = freeboardService.boardWrite(boardDTO);
-		rd.addFlashAttribute("kind", "freeboard");
+		rd.addFlashAttribute("board", "freeboard");
 		
 		if(result > 0) {
 			rd.addFlashAttribute("message", "글 쓰기 성공");
@@ -62,7 +62,7 @@ public class FreeboardController {
 	@RequestMapping(value="boardUpdate", method=RequestMethod.GET)
 	public String freeboardUpdate(int num, Model model) throws Exception {
 		FreeboardDTO freeboardDTO = (FreeboardDTO)freeboardService.boardView(num);
-		model.addAttribute("kind", "freeboard");
+		model.addAttribute("board", "freeboard");
 		model.addAttribute("path", "Update");
 		model.addAttribute("view", freeboardDTO);
 		
@@ -78,9 +78,14 @@ public class FreeboardController {
 			rd.addFlashAttribute("message", "수정 실패");
 		}
 		
-		rd.addFlashAttribute("kind", "freeboard");
+		rd.addFlashAttribute("board", "freeboard");
 		rd.addFlashAttribute("path", "Update");
 		
 		return "redirect:/board/boardList";
 	}
+	
+	/*@RequestMapping(value="boardDelete")
+	public String freeboardDelete() {
+		
+	}*/
 }

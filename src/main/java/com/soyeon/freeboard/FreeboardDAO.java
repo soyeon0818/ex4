@@ -40,8 +40,7 @@ public class FreeboardDAO implements BoardDAO {
 
 	@Override
 	public int boardDelete(int num) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.delete(NAMESPACE + "delete", num);
 	}
 
 	@Override

@@ -25,4 +25,7 @@
 		update FREEBOARD set TITLE=#{title}, CONTENTS=#{contents}, REG_DATE=SYSDATE where NUM=#{num} 
 	</update>
 	
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from FREEBOARD where NUM=#{num}
+	</delete>
 </mapper>

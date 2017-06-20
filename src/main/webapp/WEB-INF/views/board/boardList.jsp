@@ -19,6 +19,19 @@
 <body>
 	<h1>${ kind }List</h1>
 	
+	<div>
+		<form action="${ board }List">
+			<select name="search">
+				<option value="title">TITLE</option>
+				<option value="writer">WRITER</option>
+				<option value="contents">CONTENTS</option>
+			</select>
+			<input type="text" name="find">
+			<input type="submit" value="SEARCH">
+		</form>
+	</div>
+	
+	
 	<table class="table table-striped">
 		<thead>
 			<tr>

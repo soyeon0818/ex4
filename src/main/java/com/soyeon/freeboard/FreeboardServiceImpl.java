@@ -41,7 +41,6 @@ public class FreeboardServiceImpl implements BoardService{
 
 	@Override
 	public int boardDelete(int num) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return freeboardDAO.boardDelete(num);
 	}	
 }

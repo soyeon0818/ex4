@@ -13,7 +13,7 @@
 <P>  The time on the server is ${serverTime}. </P>
 
 <a href="notice/noticeList">noticeList</a>
-<a href="freeboard/freeboardList">FreeboardList</a>
+<a href="board/boardList">FreeboardList</a>
 
 </body>
 </html>
